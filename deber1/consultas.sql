@@ -8,6 +8,10 @@ CREATE TABLE clientes
     trabajo varchar(255)
 );
 
+INSERT INTO clientes (id_cliente, nombre, telefono, correo, direccion, trabajo)
+VALUES (2, 'eduardo', '0983803020', 'eduardo89@gmail.com', 'barrio ursa', 'perchero en el local tia') 
+
+
 CREATE TABLE sucursales
 (
     id_sucursal INTEGER PRIMARY KEY,
@@ -43,9 +47,13 @@ CREATE TABLE paquetes
 )
 
 
+
+
+
+
 -- CONSULTAR LAS TABLAS DE LA BASE DE DATOS
 SELECT *
-FROM paquetes
+FROM sucursales
 
 
 --CONTAR LA CANTIDAD DE PAQUETES QUE EXISTEN  ACTUALMENTE
