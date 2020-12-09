@@ -54,6 +54,7 @@ SELECT ( SELECT COUNT(*)
 
 
 --relacionar paquetes con clientes
+-- Consultar un determinado cliente cuantos paquetes envia
 SELECT destinatario, fecha, urgencia, id_paquete
 FROM paquetes
     INNER JOIN clientes
