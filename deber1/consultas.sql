@@ -41,3 +41,21 @@ CREATE TABLE paquetes
     id_peso INTEGER,
     id_sucursal INTEGER,
 )
+
+
+-- CONSULTAR LAS TABLAS DE LA BASE DE DATOS
+SELECT *
+FROM paquetes
+
+
+--CONTAR LA CANTIDAD DE PAQUETES QUE EXISTEN  ACTUALMENTE
+SELECT ( SELECT COUNT(*)
+    FROM paquetes) AS cantidad_total_de_paquetes
+
+
+--relacionar paquetes con clientes
+SELECT destinatario, fecha, urgencia, id_paquete
+FROM paquetes
+    INNER JOIN clientes
+    ON paquetes.id_cliente = clientes.id_cliente
+WHERE paquetes.id_cliente = 1;
