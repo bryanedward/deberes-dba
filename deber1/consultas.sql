@@ -8,8 +8,10 @@ CREATE TABLE clientes
     trabajo varchar(255)
 );
 
-INSERT INTO clientes (id_cliente, nombre, telefono, correo, direccion, trabajo)
-VALUES (2, 'eduardo', '0983803020', 'eduardo89@gmail.com', 'barrio ursa', 'perchero en el local tia') 
+INSERT INTO clientes
+    (id_cliente, nombre, telefono, correo, direccion, trabajo)
+VALUES
+    (2, 'eduardo', '0983803020', 'eduardo89@gmail.com', 'barrio ursa', 'perchero en el local tia')
 
 
 CREATE TABLE sucursales
@@ -75,5 +77,15 @@ WHERE paquetes.id_cliente = 1;
 SELECT id_ciudad, COUNT( id_ciudad ) AS total
 FROM paquetes
 GROUP BY id_ciudad
-ORDER BY total DESC 
+ORDER BY total DESC;
+
+
+--¿Cuántos paquetes son enviados a una determinada ciudad? 
+SELECT id_paquete, destinatario, fecha , nombre AS ciudad_envio, valor
+FROM paquetes
+    INNER JOIN ciudades
+    ON paquetes.id_ciudad = ciudades.id_ciudad
+WHERE ciudades.nombre LIKE 'quito'; 
+
+
 
