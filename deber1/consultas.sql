@@ -59,3 +59,12 @@ FROM paquetes
     INNER JOIN clientes
     ON paquetes.id_cliente = clientes.id_cliente
 WHERE paquetes.id_cliente = 1;
+
+
+
+-- buscar en que ciudad existen mayor cantidad de clientes que ocupan el servicio
+SELECT id_ciudad, COUNT( id_ciudad ) AS total
+FROM paquetes
+GROUP BY id_ciudad
+ORDER BY total DESC 
+
