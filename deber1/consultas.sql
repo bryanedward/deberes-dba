@@ -48,11 +48,6 @@ CREATE TABLE paquetes
     id_sucursal INTEGER,
 )
 
-
-
-
-
-
 -- CONSULTAR LAS TABLAS DE LA BASE DE DATOS
 SELECT *
 FROM sucursales
@@ -63,29 +58,42 @@ SELECT ( SELECT COUNT(*)
     FROM paquetes) AS cantidad_total_de_paquetes
 
 
---relacionar paquetes con clientes
--- Consultar un determinado cliente cuantos paquetes envia
-SELECT destinatario, fecha, urgencia, id_paquete
+-- ¿Cuáles son los costos de cada cliente que ha ocupado el servicio?
+SELECT ciudades.nombre as ciudad_envio, clientes.nombre as remitente,
+    CONCAT(SUM(ciudades.valor), '$') ganancia_total
+FROM clientes INNER JOIN paquetes on paquetes.id_ciudad = clientes.id_cliente
+    INNER JOIN ciudades on ciudades.id_ciudad = paquetes.id_ciudad
+GROUP BY ciudades.nombre, clientes.nombre
+
+
+--consultar los paquetes enviados en una fecha especifica
+-- mostrando el costo de envio
+SELECT destinatario , CAST(fecha AS datetime ) , clientes.nombre as remitente,
+    sucursales.ciudad AS ciudad_de_la_sucursal, ciudades.nombre as ciudad_envio,
+    CONCAT(ciudades.valor, '$') AS costo_envio_ciudad
 FROM paquetes
-    INNER JOIN clientes
-    ON paquetes.id_cliente = clientes.id_cliente
-WHERE paquetes.id_cliente = 1;
+    INNER JOIN clientes ON clientes.id_cliente = paquetes.id_cliente
+    INNER JOIN sucursales ON sucursales.id_sucursal = paquetes.id_sucursal
+    INNER JOIN ciudades ON ciudades.id_ciudad = paquetes.id_ciudad
+WHERE CAST(fecha AS date)  = CAST('2020-12-12' AS date)
 
 
-
--- buscar en que ciudad existen mayor cantidad de clientes que ocupan el servicio
-SELECT id_ciudad, COUNT( id_ciudad ) AS total
-FROM paquetes
-GROUP BY id_ciudad
-ORDER BY total DESC;
-
-
---¿Cuántos paquetes son enviados a una determinada ciudad? 
+--¿Cuántos paquetes son enviados a una determinada ciudad y cuanto es la ganancia que se obtuvo con los viajes?​
+-- consultar todos los paquetes que son enviados a quito
 SELECT id_paquete, destinatario, fecha , nombre AS ciudad_envio, valor
 FROM paquetes
     INNER JOIN ciudades
     ON paquetes.id_ciudad = ciudades.id_ciudad
-WHERE ciudades.nombre LIKE 'quito'; 
+WHERE ciudades.nombre LIKE 'quito';
 
+--obtener la ganancia total de los que se obtuvo de los paquetes enviados a una determinada
+-- ciudad
+SELECT ciudades.nombre , valor,
+    CONCAT(SUM(ciudades.valor), '$') ganancia_total
+FROM paquetes
+    INNER JOIN ciudades
+    ON paquetes.id_ciudad = ciudades.id_ciudad INNER JOIN clientes ON paquetes.id_cliente = clientes.id_cliente
+WHERE ciudades.nombre LIKE 'manta'
+GROUP BY ciudades.nombre, ciudades.valor
 
-
+​
