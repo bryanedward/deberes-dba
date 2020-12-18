@@ -1,5 +1,6 @@
 CREATE TABLE cliente
 (
+    --creacion de la tabla cliente
     cedula_cliente integer PRIMARY KEY,
     nombre_cliente varchar(255),
     apellido_cliente varchar(255),
@@ -69,11 +70,6 @@ VALUES
     ('GY1', 'Barrio Las Peñas', '0332242188', 5)
 
 
-DELETE FROM sucursal
-
-SELECT *
-FROM sucursal INNER JOIN ciudad on ciudad.id_ciudad = sucursal.id_ciudad INNER JOIN
-    cliente on cliente.ciudad_cliente = ciudad.id_ciudad
 
 create table promocion
 (
@@ -89,11 +85,10 @@ create table promocion
 INSERT INTO promocion
 VALUES
     ('promoción navideña', 12, '2020-12-20', '2021-01-01', 'MTA1')
-SELECT *
-FROM promocion
 
 create table dimension
 (
+    --creacion de la tabla dimension
     cod_dimension varchar(255) primary key,
     descrip_dimension VARCHAR (255),
     peso_paquete float,
@@ -112,6 +107,7 @@ from dimension
 
 create table urgencia
 (
+    --tabla creacion de la tabla urgencia
     cod_urgencia varchar(255) primary key,
     descrip_urgencia varchar(255),
     precio_urgencia float
@@ -130,6 +126,7 @@ VALUES
 
 create table factura
 (
+    --creacion de factura
     ruc_factura varchar(255) primary key,
     fecha_factura date,
     iva_factura DECIMAL(3,1),
@@ -158,38 +155,16 @@ CREATE TABLE paquete
     cod_urgencia VARCHAR (255)FOREIGN KEY(cod_urgencia) REFERENCES urgencia(cod_urgencia),
 );
 
-ALTER TABLE paquete
-ADD  cod_dimension  varchar(255);
-
-update paquete SET fecha_ingreso = '2020-07-20' WHERE cod_paquete = 'FME1'
-
-select *
-FROM paquete
-
 insert into paquete
 values
     ('FME3', 'caja de colchones', 'nahomy cevallos', 250, 10,
         '2020-10-15', '2020-10-20', 5, 1312524275, 'GY1', 'MTA134', 'URM');
 
-SELECT*
-FROM urgencia
-SELECT *
-FROM cliente
-SELECT *
-FROM sucursal
-SELECT *
-FROM factura
+
 insert into factura
     (ruc_factura, fecha_factura, iva_factura, cod_sucursal , cedula_cliente)
 VALUES('MTA134', '2020-10-15', 12, 'MTA2', 1312524275)
 
-select *
-from sucursal
-
-
-
-SELECT *
-FROM paquete;
 
 insert into ciudad
 values
